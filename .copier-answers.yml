@@ -1,0 +1,21 @@
+# Changes here will be overwritten by Copier
+_commit: 5.0.2
+_src_path: https://github.com/DiamondLightSource/python-copier-template.git
+author_email: n.leung@diamond.ac.uk
+author_name: Nathanael Leung
+component_lifecycle: experimental
+component_owner: data-analysis
+component_type: library
+description: Repository for useful python data analysis functions for the Diamond
+    Imaging Group
+distribution_name: imaging_toolbox
+docker: true
+docker_debug: false
+docs_type: README
+git_platform: github.com
+github_org: DiamondLightSource
+package_name: imaging_toolbox
+pypi: true
+repo_name: imaging_toolbox
+strict_typing: true
+type_checker: pyright

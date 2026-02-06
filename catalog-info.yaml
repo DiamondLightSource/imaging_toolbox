@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: imaging_toolbox
+  title: imaging_toolbox
+  description: Repository for useful python data analysis functions for the Diamond Imaging Group
+spec:
+  type: library
+  lifecycle: experimental
+  owner: data-analysis
