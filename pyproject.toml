@@ -12,7 +12,13 @@ classifiers = [
     "Programming Language :: Python :: 3.13",
 ]
 description = "Repository for useful python data analysis functions for the Diamond Imaging Group"
-dependencies = [] # Add project dependencies here, e.g. ["click", "numpy"]
+dependencies = [
+    "numpy",
+    "scikit-image",
+    "scipy",
+    "scipy-stubs",
+    "ptypy@git+https://github.com/ptycho/ptypy",
+]
 dynamic = ["version"]
 license.file = "LICENSE"
 readme = "README.md"
