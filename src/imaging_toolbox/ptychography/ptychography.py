@@ -1,5 +1,5 @@
 import numpy as np
-from ptypy.utils.plot_utils import rmphaseramp
+from ptypy.utils.plot_utils import rmphaseramp  # type: ignore
 
 
 def remove_phase_ramp(data: np.ndarray, mask: np.ndarray):
