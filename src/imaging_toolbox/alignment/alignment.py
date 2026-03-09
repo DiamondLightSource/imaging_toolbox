@@ -2,7 +2,7 @@ from typing import cast
 
 import numpy as np
 from scipy.ndimage import fourier_shift
-from skimage.registration import phase_cross_correlation
+from skimage.registration import phase_cross_correlation  # type: ignore
 
 
 def fft_shift_data(data: np.ndarray, shift: np.ndarray) -> np.ndarray:
