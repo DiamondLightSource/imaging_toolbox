@@ -1,21 +1,70 @@
+from typing import cast
+
 import numpy as np
-from ptypy.utils.plot_utils import rmphaseramp  # type: ignore
+import numpy.typing as npt
+from skimage.restoration import unwrap_phase  # type: ignore
 
 
-def remove_phase_ramp(data: np.ndarray, mask: np.ndarray):
+def phase_ramp_removal(a: npt.NDArray[np.float64], w: npt.NDArray[np.bool]):
+    ph = np.exp(1j * np.angle(a))
+    [gx, gy] = np.gradient(ph)
+    gx = -np.real(1j * gx / ph)
+    gy = -np.real(1j * gy / ph)
+
+    nrm = w.sum()
+    agx = (gx * w).sum() / nrm
+    agy = (gy * w).sum() / nrm
+
+    (xx, yy) = np.indices(a.shape)
+    p = np.exp(-1j * (agx * xx + agy * yy))
+    return a * p
+
+
+def remove_phase_ramp(
+    data: npt.NDArray[np.float64], mask: npt.NDArray[np.bool]
+) -> npt.NDArray[np.float64]:
     """
     Function to remove phase ramp
 
     Parameters
     ----------
     data: ndarray
-        Input image as complex 2D array
+        Phase segment of ptychography data as a 2D or 3D array
     mask: ndarray
+        Boolean array of equal dimensions to data array
     """
     if data.ndim == 2:
-        return rmphaseramp(data, weight=mask)
+        if mask.ndim == 3:
+            raise ValueError("mask cannot have more dimensions than data")
+        if data.shape != mask.shape:
+            raise ValueError(
+                f"data does not have the same shape as mask.\
+                    data has shape {data.shape} whilst mask has shape {mask.shape}"
+            )
+        return cast(
+            npt.NDArray[np.float64],
+            unwrap_phase(np.angle(phase_ramp_removal(data, w=mask))),
+        )
     else:
         unramped = np.zeros_like(data)
-        for i in range(data.shape[0]):
-            unramped[i, :, :] = rmphaseramp(data[i, :, :], weight=mask)
+        if mask.ndim == 2:
+            if data.shape[1:] != mask.shape:
+                raise ValueError(
+                    f"shape of mask {mask.shape} does not \
+                                 match the shape of images in data {data.shape}"
+                )
+            for i in range(data.shape[0]):
+                unramped[i, :, :] = unwrap_phase(
+                    np.angle(phase_ramp_removal(data[i, :, :], w=mask))
+                )
+        else:
+            if data.shape != mask.shape:
+                raise ValueError(
+                    f"shape of mask {mask.shape} does not \
+                                 match the shape of data {data.shape}"
+                )
+            for i in range(data.shape[0]):
+                unramped[i, :, :] = unwrap_phase(
+                    np.angle(phase_ramp_removal(data[i, :, :], w=mask[i]))
+                )
         return unramped
