@@ -6,7 +6,7 @@ from skimage.restoration import unwrap_phase  # type: ignore
 
 
 def phase_ramp_removal(a: npt.NDArray[np.float64], w: npt.NDArray[np.bool]):
-    ph = np.exp(1j * np.angle(a))
+    ph = np.exp(1j * a)
     [gx, gy] = np.gradient(ph)
     gx = -np.real(1j * gx / ph)
     gy = -np.real(1j * gy / ph)
@@ -17,7 +17,7 @@ def phase_ramp_removal(a: npt.NDArray[np.float64], w: npt.NDArray[np.bool]):
 
     (xx, yy) = np.indices(a.shape)
     p = np.exp(-1j * (agx * xx + agy * yy))
-    return a * p
+    return np.angle(ph * p)
 
 
 def remove_phase_ramp(
@@ -43,7 +43,7 @@ def remove_phase_ramp(
             )
         return cast(
             npt.NDArray[np.float64],
-            unwrap_phase(np.angle(phase_ramp_removal(data, w=mask))),
+            unwrap_phase(phase_ramp_removal(data, w=mask)),
         )
     else:
         unramped = np.zeros_like(data)
@@ -55,7 +55,7 @@ def remove_phase_ramp(
                 )
             for i in range(data.shape[0]):
                 unramped[i, :, :] = unwrap_phase(
-                    np.angle(phase_ramp_removal(data[i, :, :], w=mask))
+                    phase_ramp_removal(data[i, :, :], w=mask)
                 )
         else:
             if data.shape != mask.shape:
@@ -65,6 +65,6 @@ def remove_phase_ramp(
                 )
             for i in range(data.shape[0]):
                 unramped[i, :, :] = unwrap_phase(
-                    np.angle(phase_ramp_removal(data[i, :, :], w=mask[i]))
+                    phase_ramp_removal(data[i, :, :], w=mask[i])
                 )
         return unramped
