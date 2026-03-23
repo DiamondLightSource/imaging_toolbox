@@ -1,3 +1,3 @@
-from .ptychography import remove_phase_ramp
+from .ptychography import remove_ramp_and_unwrap_phase
 
-__all__ = ["remove_phase_ramp"]
+__all__ = ["remove_ramp_and_unwrap_phase"]
