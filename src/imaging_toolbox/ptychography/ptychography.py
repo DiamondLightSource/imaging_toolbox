@@ -5,7 +5,9 @@ import numpy.typing as npt
 from skimage.restoration import unwrap_phase  # type: ignore
 
 
-def phase_ramp_removal(a: npt.NDArray[np.float64], w: npt.NDArray[np.bool]):
+def phase_ramp_removal(
+    a: npt.NDArray[np.float64], w: npt.NDArray[np.bool]
+) -> npt.NDArray[np.float64]:
     """
     Function to remove phase ramp
 
