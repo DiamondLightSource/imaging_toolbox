@@ -3,8 +3,8 @@ import numpy as np
 
 def crop_data(
     data: np.ndarray,
-    y_range: tuple[int, int] = (0, -1),
-    x_range: tuple[int, int] = (0, -1),
+    y_range: tuple[int | None, int | None] = (None, None),
+    x_range: tuple[int | None, int | None] = (None, None),
 ) -> np.ndarray:
     """
     Function that crops an image or a stack of images
@@ -32,8 +32,8 @@ def crop_data(
 
 def normalise_data(
     data: np.ndarray,
-    y_range: tuple[int, int],
-    x_range: tuple[int, int],
+    y_range: tuple[int | None, int | None] = (None, None),
+    x_range: tuple[int | None, int | None] = (None, None),
     dtype: str = "amplitude",
 ) -> np.ndarray:
     """
