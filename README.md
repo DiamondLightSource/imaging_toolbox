@@ -7,10 +7,21 @@
 
 Repository for useful python data analysis functions for the Diamond Imaging Group
 
+<<<<<<< before updating
 Source          | <https://github.com/DiamondLightSource/imaging_toolbox>
 :---:           | :---:
 PyPI            | ~~`pip install imaging_toolbox`~~
 Docker          | ~~`docker run ghcr.io/diamondlightsource/imaging_toolbox:latest`~~
+=======
+This is where you should write a short paragraph that describes what your module does,
+how it does it, and why people should use it.
+
+What            | Where
+:---:           | :---:
+Source          | <https://github.com/DiamondLightSource/imaging_toolbox>
+PyPI            | `pip install imaging_toolbox`
+Docker          | `docker run ghcr.io/diamondlightsource/imaging_toolbox:latest`
+>>>>>>> after updating
 Releases        | <https://github.com/DiamondLightSource/imaging_toolbox/releases>
 
 
