@@ -4,8 +4,8 @@ FROM ghcr.io/diamondlightsource/ubuntu-devcontainer:noble AS developer
 
 # Add any system dependencies for the developer/build environment here
 RUN apt-get update -y && apt-get install -y --no-install-recommends \
-    graphviz \
-    && apt-get dist-clean
+  graphviz \
+  && apt-get dist-clean
 
 # The build stage installs the context into the venv
 FROM developer AS build
@@ -19,9 +19,9 @@ RUN chmod o+wrX .
 # Tell uv sync to install python in a known location so we can copy it out later
 ENV UV_PYTHON_INSTALL_DIR=/python
 
-# Sync the project without its dev dependencies
+# Sync the project with workflows dependencies but not dev dependencies
 RUN --mount=type=cache,target=/root/.cache/uv \
-    uv sync --locked --no-editable --no-dev --managed-python
+  uv sync --locked --no-editable --no-dev --managed-python --extra workflows
 
 
 # The runtime stage copies the built venv into a runtime container
