@@ -5,11 +5,10 @@ on:
     branches:
       - main
     tags:
-      - '*'
+      - "*"
   pull_request:
 
 jobs:
-
   lint:
     uses: ./.github/workflows/_tox.yml
     with:
@@ -36,16 +35,22 @@ jobs:
       contents: read
       packages: write
 
+  ptypy-workflows:
+    uses: ./.github/workflows/_ptypy-workflows.yml
+    permissions:
+      contents: read
+      packages: write
+
   dist:
     uses: ./.github/workflows/_dist.yml
-  
+
   pypi:
     needs: [dist, test]
     if: github.ref_type == 'tag'
     uses: ./.github/workflows/_pypi.yml
     permissions:
       id-token: write
-  
+
   release:
     needs: [dist, test]
     if: github.ref_type == 'tag'

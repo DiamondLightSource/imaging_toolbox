@@ -1,0 +1,13 @@
+name: ptypy_workflow
+channels:
+  - conda-forge
+dependencies:
+  - python=3.14
+  - matplotlib
+  - jupyter
+  - nbconvert
+  - papermill
+  - h5py
+  - pip
+  - pip:
+      - git+https://github.com/ptycho/ptypy@master
