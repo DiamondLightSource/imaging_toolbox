@@ -37,6 +37,8 @@ jobs:
 
   ptypy-workflows:
     uses: ./.github/workflows/_ptypy-workflows.yml
+    with:
+      publish: true
     permissions:
       contents: read
       packages: write
